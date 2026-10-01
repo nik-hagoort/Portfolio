@@ -15,6 +15,31 @@ Welcome to my professional portfolio! Here's some more info on what I'm about:
 
 ---
 
+<!-- portfolio:impact:start -->
+## 📊 Impact at a Glance (2026)
+
+| | |
+|---|---|
+| 🔧 **311 PRs** merged across **69 repos** | 🤖 **41 tasks** completed by an overnight AI agent queue I built |
+| 💸 **~$17k/mo** of idle hosting identified for teardown; **~$8.8k/mo** confirmed after the team deleted it | 🧪 E2E monitoring: failures **10% → 0%**, up to **74% faster**, **~30k** fewer runs/mo |
+| 🖥️ Freed **~16 nodes** by fixing a container capacity deadlock | 🛡️ **~62k/wk** WAF matches attributed to 5 sources; **83** stale DNS records removed |
+
+### Case studies
+- [Synthetic monitoring: faster, cheaper, more reliable](case-studies/synthetic-monitoring-optimization/)
+- [Tooling for an App Service → Container Apps migration](case-studies/container-migration-tooling/)
+- [Container platform capacity and right-sizing](case-studies/container-platform-capacity/)
+- [Multi-agent AI incident investigation](case-studies/ai-incident-response/)
+- [Internal SRE dashboard plugins](case-studies/sre-dashboard-plugins/)
+- [Unattended overnight AI agent queue](case-studies/overnight-ai-agent-queue/)
+- [Edge security and DNS hygiene](case-studies/edge-security-dns-hygiene/)
+- [Evidence-first SQL storage cost plan](case-studies/sql-storage-cost-plan/)
+- [Legacy .NET monolith modernization groundwork](case-studies/legacy-monolith-modernization/)
+
+Full dated list: [accomplishments/2026.md](accomplishments/2026.md)
+<!-- portfolio:impact:end -->
+
+---
+
 ## 🛠️ Technical Strengths
 
 - **Cloud Platforms**: Azure (Infrastructure, Monitoring, Governance)
