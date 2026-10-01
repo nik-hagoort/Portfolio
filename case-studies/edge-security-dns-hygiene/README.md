@@ -1,26 +1,28 @@
-# Edge security and DNS hygiene
+# Unblocked a production WAF lockdown by attributing ~3.2M requests/yr of unexplained traffic
 
-**Role:** DevSecOps / SRE · **When:** Jun 2026 – Sep 2026 · **Stack:** Cloudflare WAF, Azure DNS, Azure Application Gateway, Azure AD B2C, KQL, GitHub code search
+**Role:** DevSecOps / SRE · **When:** Jun 2026 – Sep 2026 · **Stack:** Cloudflare WAF, Azure DNS, Azure Application Gateway, Azure AD B2C, KQL, GitHub Actions/App tokens
 
 ## At a glance
 | Metric | Value |
 |---|---|
-| WAF rule matches attributed | ~62k/week, to 5 sources |
-| Residual after attribution | ~200/week (internet scanners, safe to block) |
-| Stale public DNS records removed | 83 (60 prod, 23 dev) |
-| Vulnerabilities cleared ahead of a security deadline | 1 critical + 36 high |
+| Unexplained WAF matches attributed | **~62k/week (~3.2M/yr)**, all traced to 5 sources |
+| Residual after attribution | ~200/week, all internet scanners |
+| Production MFA outage avoided | sign-up flow found and excluded before the block |
+| Stale public DNS records removed | **83** (60 prod, 23 dev) |
+| Vulnerabilities remediated ahead of deadline | **1 critical + 36 high** |
+| CI pipelines moved off a personal token | **7** templates drafted to GitHub App tokens |
 
 ## The problem
-A WAF rule meant to block public access to internal-only services had sat in log-only mode for months. ~62k weekly matches came from callers nobody could name, so flipping it to block risked breaking production. Separately, years of DNS records pointed at retired hosts.
+A WAF rule meant to lock internal services away from the internet had sat in log-only mode for months. ~62k weekly matches came from callers nobody could identify, so blocking risked a production outage.
 
 ## What I did
-- Attributed every weekly match by joining WAF logs with gateway and app telemetry. The "unknown third-party integrator" turned out to be the identity provider's own MFA phone-enrollment flow; blocking it would have broken MFA sign-up. I specified path exclusions for it.
-- Traced the other 4 sources to stale public URLs in a release variable, a key vault override that loaded after environment variables, and a worker's config file. For each I wrote the exact fix to point it at the private host.
-- Wrote a standalone flip-day runbook so the security owner can execute and roll back without me.
-- Deleted 83 stale DNS records, kept restore files, and watched traffic for 2.5h.
-- Cleared 1 critical and 36 high vulnerabilities on a build host before the security team's deadline.
-- Mapped every use of a single engineer's expiring personal GitHub token in CI and drafted the switch of all 7 consuming templates to short-lived GitHub App tokens (waiting on an org admin to create the App).
+- **Attributed every request** by joining WAF logs with gateway and application telemetry. The "unknown integrator" was the identity provider's own MFA enrollment flow, and blocking it would have broken MFA sign-up. I specified precise path exclusions.
+- **Traced the other 4 sources** to stale public URLs in a release variable, a key-vault override that loaded after environment variables, and a worker config file. For each I wrote the exact fix to move it to private endpoints.
+- **Wrote a standalone flip-day runbook** so the security owner can execute the block and roll it back.
+- **Cleaned up DNS:** deleted 83 stale public records, kept restore files, watched traffic, and then added a code-search and liveness gate to every future deletion.
+- **Remediated 1 critical and 36 high vulnerabilities** on a build host ahead of the security team's deadline.
+- **Removed a single-person dependency** by mapping every CI use of one engineer's expiring personal token and drafting the move of all 7 templates to short-lived GitHub App tokens.
 
 ## Results
-- The block decision now rests on an accounted-for traffic table instead of a guess.
-- One dev alias that looked stale was still live; it was restored the same day. Since then every DNS deletion is gated on an org-wide code search plus a liveness check on the target.
+- **~3.2M requests/yr** of unexplained traffic fully accounted for, which turned a risky block into a data-backed decision.
+- **83 stale records** removed from the public attack surface.
