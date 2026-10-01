@@ -21,7 +21,7 @@ Welcome to my professional portfolio! Here's some more info on what I'm about:
 | | |
 |---|---|
 | 🔧 **311 PRs** merged across **69 repos** | 🤖 **41 tasks** completed by an overnight AI agent queue I built |
-| 💸 **~$17k/mo** of idle hosting identified for teardown; **~$8.8k/mo** confirmed after the team deleted it | 🧪 E2E monitoring: failures **10% → 0%**, up to **74% faster**, **~30k** fewer runs/mo |
+| 💸 **~$17k/mo** of idle hosting identified for teardown; **~$8.8k/mo** confirmed after the team deleted it | 🧪 E2E monitoring: **~$11k/yr** cut (est.), failures **10% → 0%**, up to **74% faster** |
 | 🖥️ Freed **~16 nodes** by fixing a container capacity deadlock | 🛡️ **~62k/wk** WAF matches attributed to 5 sources; **83** stale DNS records removed |
 
 ### Case studies

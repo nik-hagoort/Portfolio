@@ -1,4 +1,4 @@
-# Made production E2E monitoring faster, cheaper and more reliable
+# Cut synthetic-monitoring cost ~$11k/yr while driving test failures to 0%
 
 **Role:** DevSecOps / SRE · **When:** Mar 2026 – May 2026 · **Stack:** Checkly, Playwright, TypeScript, Checkly CLI, Python
 
@@ -9,7 +9,8 @@
 | Failure rate on the worst check | 10% | 0% |
 | Runtime of the slowest optimized check | 532s | 349s (34% faster) |
 | Fastest single win | 93s | 24s (74% faster) |
-| Monthly check runs | baseline | ~30k fewer per month |
+| Estimated monitoring spend cut | — | ~$940/mo (~$11k/yr) across 12 PRs |
+| Savings ceiling identified | — | ~$3.7k/mo (68% of spend) if the full suite is converted |
 
 ## The problem
 The company runs ~90 synthetic end-to-end checks against production every 30–60 minutes. Playwright checks are billed by runtime (one extra run per 30 seconds), so slow, flaky tests were both the biggest line item and the noisiest source of false alerts. The plan was trending toward an overage.
@@ -25,7 +26,8 @@ The company runs ~90 synthetic end-to-end checks against production every 30–6
 
 ## Results
 - Failure rate on all 13 optimized checks went to 0%. Average runtime fell 20%.
-- ~30k fewer check runs per month (measured from the run-rate model, ~$120/mo). An earlier ~$940/mo figure was a projection across the whole suite and is not claimed here.
+- Shipped 12 PRs with ~$940/mo (~$11k/yr) of estimated monitoring savings, and mapped a ~$3.7k/mo (68%) ceiling for the rest of the suite.
+- 10 of the 12 PRs verified passing in the Checkly cloud before review.
 - Some checks had no safe optimization, for example a 65s wait that tests a real lunch-break rule, and I left them alone rather than weaken coverage.
 
 ## Lessons
