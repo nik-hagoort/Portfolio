@@ -18,7 +18,7 @@ The team had no single read-only view of fleet health, cost and pending decision
 - **Wrote the application-telemetry ingest** the platform had left as a stub, so every plugin reads request and availability data from a shared warehouse.
 - **Built an idle-spend detector** that watches ~960 resources for cost with zero or near-zero traffic. It classifies each one (dark, dim, standby, too new), tracks how long it has been dark, and turns a finding into a savings card in one click.
 - **Built a fleet map** showing every service by traffic and availability, grouped by resource group.
-- **Ported and hardened the container sizing board**, fixing 9 defects on the way (see [container-platform-capacity](../container-platform-capacity/)).
+- **Ported and hardened the container sizing board**, fixing 9 defects on the way (see [cloud-replatform](../cloud-replatform/)).
 - **Made it AI-native:** every plugin action is also an MCP tool, so Claude sessions work from the same data people see.
 - **Built a publishing plugin** that hosts the team's weekly newsletters.
 
