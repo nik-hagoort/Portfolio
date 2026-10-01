@@ -20,15 +20,14 @@ Welcome to my professional portfolio! Here's some more info on what I'm about:
 
 | | |
 |---|---|
+| 🚀 Re-platformed **~110 App Service plans → ~280 Container Apps** in **under 4 months** | 💸 **~$590k/yr** confirmed cloud savings (team); **115 legacy apps** retired in one day |
 | 🔧 **311 PRs** merged across **69 repos** | 🤖 **41 tasks** completed in 2 weeks by an overnight AI engineer I built |
-| 💸 **~$200k/yr** of hosting savings identified; **~$140k/yr** realized after the team tore it down | 🧪 E2E monitoring: **~$11k/yr** cut (est.), failures **10% → 0%**, up to **74% faster** |
-| 🖥️ Freed **~16 nodes** of container capacity; graded **~100** prod apps in **154s** | 🛡️ **~3.2M req/yr** of unexplained WAF traffic attributed; **83** stale DNS records removed |
+| 🧪 E2E monitoring: **~$11k/yr** cut (est.), failures **10% → 0%**, up to **74% faster** | 🛡️ **~3.2M req/yr** of unexplained WAF traffic attributed; **83** stale DNS records removed |
 | 🗄️ **~$36k/yr** SQL storage savings identified *(projected)* | 🚨 **8** production incidents investigated by a multi-agent AI system I built |
 
 ### Case studies
+- ⭐ [Re-platformed an entire App Service estate onto Container Apps in under 4 months](case-studies/cloud-replatform/)
 - [Synthetic monitoring: faster, cheaper, more reliable](case-studies/synthetic-monitoring-optimization/)
-- [Tooling for an App Service → Container Apps migration](case-studies/container-migration-tooling/)
-- [Container platform capacity and right-sizing](case-studies/container-platform-capacity/)
 - [Multi-agent AI incident investigation](case-studies/ai-incident-response/)
 - [Internal SRE dashboard plugins](case-studies/sre-dashboard-plugins/)
 - [Unattended overnight AI agent queue](case-studies/overnight-ai-agent-queue/)
