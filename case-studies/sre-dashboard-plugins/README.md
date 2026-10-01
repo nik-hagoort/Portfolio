@@ -1,26 +1,27 @@
-# Plugins for an internal SRE dashboard platform
+# Built the cost, capacity and fleet plugins for an internal SRE platform
 
 **Role:** DevSecOps / SRE (plugin author; a teammate owns the platform) · **When:** Aug 2026 – Sep 2026 · **Stack:** TypeScript, Node.js, PostgreSQL, Azure Resource Graph, Azure Cost data, MCP, Azure DevOps
 
 ## At a glance
 | Metric | Value |
 |---|---|
-| PRs merged to the dashboard repo | 46 |
-| Resources scanned by the idle-spend detector | ~960 |
-| Idle spend currently flagged | ~$2.2k/yr with zero traffic, ~$1k/yr near-zero |
-| Telemetry refresh | every 2h, automated |
+| PRs merged to the platform | **46** in ~6 weeks |
+| Resources under continuous idle-spend watch | **~960** |
+| Idle or near-idle spend flagged right now | ~$3.2k/yr |
+| Defects fixed while porting the sizing board | 9 |
+| Telemetry refresh | automated, every 2 hours |
 
 ## The problem
-The team needed one read-only place to see fleet health, cost and pending decisions, and AI agents needed to use it as well as people.
+The team had no single read-only view of fleet health, cost and pending decisions, and AI agents had no way to use one.
 
 ## What I did
-- Wrote the application-telemetry ingest that the platform had left as a stub, so plugins could read request and availability data from a shared warehouse.
-- Built a fleet map that shows every service by traffic and availability, grouped by resource group.
-- Built an idle-spend detector that flags anything costing money with zero or near-zero traffic, classifies it (dark, dim, standby, too new), tracks how long it has been dark, and links straight into a savings card.
-- Ported the container sizing board (see [container-platform-capacity](../container-platform-capacity/)) and fixed 9 defects along the way.
-- Exposed each plugin's actions as MCP tools so Claude sessions can read and update the same data people see.
-- Built a publishing plugin that hosts the team's weekly newsletters on the dashboard.
+- **Wrote the application-telemetry ingest** the platform had left as a stub, so every plugin reads request and availability data from a shared warehouse.
+- **Built an idle-spend detector** that watches ~960 resources for cost with zero or near-zero traffic. It classifies each one (dark, dim, standby, too new), tracks how long it has been dark, and turns a finding into a savings card in one click.
+- **Built a fleet map** showing every service by traffic and availability, grouped by resource group.
+- **Ported and hardened the container sizing board**, fixing 9 defects on the way (see [container-platform-capacity](../container-platform-capacity/)).
+- **Made it AI-native:** every plugin action is also an MCP tool, so Claude sessions work from the same data people see.
+- **Built a publishing plugin** that hosts the team's weekly newsletters.
 
 ## Results
-- The idle-spend detector covers ~960 resources and currently flags ~$3.2k/yr of idle or near-idle spend.
-- All plugins share one warehouse and never call Azure directly. Access is team-scoped through identity group claims.
+- **46 PRs** merged in about 6 weeks, live for the whole team.
+- Idle spend now gets flagged automatically instead of being found by hand.

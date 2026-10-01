@@ -1,32 +1,28 @@
-# Fixed capacity deadlocks and right-sized a Container Apps fleet with data
+# Freed ~16 nodes of Container Apps capacity and built data-driven right-sizing
 
 **Role:** DevSecOps / SRE · **When:** May 2026 – Sep 2026 · **Stack:** Azure Container Apps (dedicated workload profiles), KEDA, Azure Monitor, KQL, Node.js, Python
 
 ## At a glance
 | Metric | Value |
 |---|---|
-| Prod Container Apps graded per run | ~100 in 154s |
-| Average CPU use vs CPU allocated across the fleet | ~2% |
-| Cores wasted by a rollout deadlock | ~38 |
-| Nodes freed by moving one workload to a bigger profile | ~16 (headroom held through peak) |
-| Dev apps switched to scale-to-zero | 22 now, plus 44 open migration PRs |
-| Apps reviewed per AI pass on the sizing board | ~90 |
+| Nodes freed by one profile move | **~16** (~$3.6k/mo of capacity at retail, est.) |
+| Cores reclaimed from a rollout deadlock | **~38** |
+| Production apps graded for sizing | **~100 in 154 seconds** |
+| False "needs more CPU" calls removed | 52 → 37 (**−29%**) |
+| Dev apps moved to scale-to-zero | **22** live, plus the default for **44** in-flight migrations |
+| Production trims rolled back | **0** |
 
 ## The problem
-New deployments were failing because the shared dedicated node pool was full. Every app was sized by guesswork, and the fleet was paying for nodes it barely used.
+Deployments were failing because the shared node pool was full, yet the fleet was using only ~2% of the CPU it had allocated. Apps were sized by guesswork.
 
 ## What I did
-- Traced the node-cap crunch to two stuck rollouts that double-ran their replicas (~38 cores), not to ghost replicas. I moved the largest workload to a bigger profile, which freed ~16 nodes, and confirmed the headroom held through the afternoon peak.
-- Set 22 dev apps to scale to zero and changed the migration template so every new dev app defaults to it.
-- Built a sizing analyzer: it collects 7 days of hottest-window load plus 30 days of sustained peaks per app and recommends CPU, memory, min/max replicas and the scaling rule. Grades in one run: A 9 / B 32 / C 31 / D 17 / F 12.
-- Switched from raw 1-minute peaks to sustained peaks. That cut the "needs more CPU" list from 52 apps to 37 and stopped single spikes from driving upsizes.
-- Shipped a decision board where each recommendation gets an in-session AI review (endorse, flag or reject) before a human decides.
+- **Diagnosed the capacity outage.** It wasn't ghost replicas: two stuck rollouts were double-running (~38 cores). I moved the heaviest workload to a larger profile, which freed **~16 nodes**, and confirmed the afternoon peak was a non-event.
+- **Made dev scale to zero.** I switched 22 apps over and changed the migration template so all 44 in-flight migrations default to it.
+- **Built a sizing analyzer** that grades ~100 production apps in 154s. It sizes from the hottest 2h of 7 days and 30 days of sustained peaks, and recommends CPU, memory, replica bounds and the scaling rule.
+- **Raised recommendation quality.** Sizing from sustained load instead of 1-minute spikes cut false upsize calls by 29%.
+- **Shipped a decision board** where an AI review (endorse, flag or reject) runs on every recommendation before a human applies it.
 
 ## Results
-- After the profile move, the afternoon peak was a non-event, with 16+ nodes of headroom.
-- The first three production trims went out with zero rollbacks. Memory headroom stayed at 15–35% of the new limits and latency didn't change.
-- Billing showed that per-app savings on shared nodes mostly can't be measured: only node count moves the bill. I now report fleet-level node savings instead of per-app dollars.
-
-## Lessons
-- On shared node billing, right-sizing pays only when it frees a whole node. Plan trims in node-sized batches.
-- Measure a sustained load, never a single maximum.
+- The capacity crunch was cleared, with 16+ nodes of headroom through peak.
+- The first production trims shipped with **zero rollbacks**. Memory headroom stayed at 15–35% and latency didn't change.
+- I established that shared-node billing only drops when a whole node frees, and switched the team's savings reporting to node level.

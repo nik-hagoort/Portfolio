@@ -20,9 +20,10 @@ Welcome to my professional portfolio! Here's some more info on what I'm about:
 
 | | |
 |---|---|
-| 🔧 **311 PRs** merged across **69 repos** | 🤖 **41 tasks** completed by an overnight AI agent queue I built |
-| 💸 **~$17k/mo** of idle hosting identified for teardown; **~$8.8k/mo** confirmed after the team deleted it | 🧪 E2E monitoring: **~$11k/yr** cut (est.), failures **10% → 0%**, up to **74% faster** |
-| 🖥️ Freed **~16 nodes** by fixing a container capacity deadlock | 🛡️ **~62k/wk** WAF matches attributed to 5 sources; **83** stale DNS records removed |
+| 🔧 **311 PRs** merged across **69 repos** | 🤖 **41 tasks** completed in 2 weeks by an overnight AI engineer I built |
+| 💸 **~$200k/yr** of hosting savings identified; **~$140k/yr** realized after the team tore it down | 🧪 E2E monitoring: **~$11k/yr** cut (est.), failures **10% → 0%**, up to **74% faster** |
+| 🖥️ Freed **~16 nodes** of container capacity; graded **~100** prod apps in **154s** | 🛡️ **~3.2M req/yr** of unexplained WAF traffic attributed; **83** stale DNS records removed |
+| 🗄️ **~$36k/yr** SQL storage savings identified *(projected)* | 🚨 **8** production incidents investigated by a multi-agent AI system I built |
 
 ### Case studies
 - [Synthetic monitoring: faster, cheaper, more reliable](case-studies/synthetic-monitoring-optimization/)

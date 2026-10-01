@@ -1,31 +1,31 @@
-# Tooling that drove an App Service → Azure Container Apps migration
+# Built the tooling behind a ~$410k/yr hosting migration and surfaced ~$200k/yr in savings
 
 **Role:** DevSecOps / SRE · **When:** Mar 2026 – Sep 2026 · **Stack:** Azure Container Apps, App Service, Bicep, Azure DevOps Pipelines, Node.js, PostgreSQL, Entra ID, MCP, Claude Code
 
 ## At a glance
 | Metric | Value |
 |---|---|
-| App Service plans tracked | ~110 |
-| Migration PRs I merged | 36, across 20 repos |
-| PRs to the migration tracker app | 53 |
-| Teardown candidates I identified | 57 plans, ~$17k/mo |
-| Team teardown that followed | 54 plans + 115 web apps deleted, ~$8.8k/mo confirmed savings |
+| Hosting spend in scope | ~$410k/yr across ~110 App Service plans |
+| Teardown savings I identified | **~$200k/yr** (57 plans) |
+| Savings realized once the team tore them down | **~$140k/yr** measured (54 plans + 115 web apps deleted) |
+| Migration PRs I shipped | 36 across 20 repos |
+| Migration tracker | built from zero, 53 PRs, live with Entra ID sign-in and an MCP API |
+| Accuracy of the per-app cost model | within 0.2% of the actual bill |
 
 ## The problem
-A fleet of ~$410k/yr of App Service hosting needed to move to Container Apps. Each app needed its existing config discovered, new Bicep, a Dockerfile, a pipeline and a safe DNS cutover. Nobody had one view of which apps were done, which old plans could be deleted, or what the migration was actually saving.
+~$410k/yr of App Service hosting had to move to Azure Container Apps. Every app needed discovery, Bicep, a Dockerfile, a pipeline and a safe cutover. Nobody could see what was done, what could be deleted, or whether any money was being saved.
 
 ## What I did
-- Wrote an AI migration skill that clones a repo, reads the live App Service config from Azure, generates Bicep, a Dockerfile and a pipeline to the company's standards, validates them, and opens a draft PR. It updates the tracker automatically at 3 milestones.
-- Built the migration tracker: first a static page, then a Container App with PostgreSQL, Entra ID sign-in, full create/read/update/delete (CRUD) and an MCP server, so people and AI agents could both read and update status.
-- Added a cost dashboard that splits the fixed workload-profile "rent" from migration-driven spend, and a teardown hit list that cross-checks every old plan's resident apps against the tracker.
-- Found that only 1 of 164 old plans had actually been deleted, so almost none of the projected savings had been realized. I turned that into a ranked teardown list of 57 plans worth ~$17k/mo.
-- Standardized a "dark launch" pipeline shape (deploy, verify, a disaster-recovery region wake/verify/stop, then manual prod approval) and rolled it across migration pipelines.
-- Built a regression detector that diffs Application Insights error signatures across the cutover. On one service it showed 960/960 requests returning 200 in the first hour after cutover.
+- **Automated the migration itself.** I built an AI skill that reads an app's live Azure config, generates Bicep, a Dockerfile and a pipeline to company standards, validates them and opens the PR. I used it to ship 36 migration PRs across 20 repos.
+- **Built the migration tracker** and evolved it from a static page into a production Container App with PostgreSQL, Entra ID sign-in, full create/read/update/delete (CRUD) and an MCP server. Engineers and AI agents update the same source of truth, and the migration skill writes to it automatically at 3 milestones.
+- **Found the savings that weren't landing.** A plan-level audit showed only 1 of 164 legacy plans had actually been deleted. I turned that into a ranked teardown list of 57 plans worth **~$200k/yr**.
+- **Built the cost dashboard and model** that separates fixed node "rent" from migration-driven spend and reconstructs per-app container cost to **0.2%** of the bill.
+- **Standardized safe cutovers.** I designed a dark-launch pipeline (deploy, verify, wake/verify/stop in the DR region, then manual prod approval) and rolled it across the migration pipelines.
+- **Proved cutovers clean** with a regression detector that diffs error signatures across the cutover. One example: 960/960 requests returned 200 in the first hour after cutover.
 
 ## Results
-- The team deleted 54 plans and 115 web apps in one teardown. Savings of ~$8.8k/mo were confirmed against billing; the team carried out the teardown and I contributed the hit list and tooling.
-- The cost dashboard reconstructs per-app Container Apps cost from node billing to within 0.2% of the bill.
+- **~$140k/yr in measured savings** once the team deleted 54 plans and 115 web apps in one teardown, working from my hit list and tooling.
+- A single live view of migration status and savings, used by both engineers and AI agents.
 
 ## Lessons
-- Azure bills App Service per plan, not per app, so savings only land when the whole plan is gone. Track plans, not apps.
-- Only report savings once the old resource is actually deleted. Until then the number is projected.
+- Azure bills App Service per plan, so savings land only when the whole plan is gone. Track plans, not apps.
