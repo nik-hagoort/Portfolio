@@ -62,6 +62,7 @@ Full dated list: [accomplishments/2026.md](accomplishments/2026.md)
 
 ## 🧠 Certifications
 
+- ✅ GitHub Copilot (GH-300)
 - ✅ CompTIA Network+
 
 ---
